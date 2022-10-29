@@ -1,39 +1,73 @@
-﻿using System;
+﻿using MyServer.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MyServer.TemplateEngines;
 
 namespace MyServer.Controllers
 {
     public static class FileManager
     {
-        public static HttpResponse MethodHandler
-            (
-                HttpListenerRequest request,
-                Configs configs
-            )
+        private static Dictionary<string, FileMethodInfo> methods;
+
+        static FileManager()
         {
-            var path = GetPath(request.RawUrl, configs);
+            methods = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => Attribute.IsDefined(t, typeof(FileControllerAttribute)))
+                .SelectMany(t => FileMethodInfo.GetMethods(t))
+                .ToDictionary(c => c.Name, c => c);
+        }
+
+        public static HttpResponse MethodHandler(HttpListenerRequest request, Configs configs)
+        {
+            var index = request.RawUrl.IndexOf('?');
+            string rawUrl;
+            if (index > 0)
+                rawUrl = request.RawUrl.Substring(0, index);
+            else
+                rawUrl = request.RawUrl;
+            if (rawUrl.Length < 2)
+                rawUrl = configs.DefaultFile;
+
+            var path = GetPath(rawUrl, configs);
 
             if (File.Exists(path))
             {
-                try
+                if (Path.GetExtension(path).Equals(".html"))
                 {
-                    var buffer = File.ReadAllBytes(path);
-                    return new HttpResponse(HttpStatusCode.OK, buffer, GetContentType(path));
+                    var exists = methods.TryGetValue($"{rawUrl}.{string.Join('.', request.QueryString.AllKeys)}", out var method);
+                    if (exists)
+                    {
+                        try
+                        {
+                            var page = TemplateEngine.OpenBrackets(File.ReadAllText(path), method.Invoke(request), true);
+                            return new HttpResponse(HttpStatusCode.OK, page, "text/html");
+                        }
+                        catch (Exception e)
+                        {
+                            return HttpResponse.GetInternalErrorResponse(e);
+                        }
+                    }
                 }
-                catch (ArgumentException e)
-                {
-                    return HttpResponse.GetBadRequestResponse();
-                }
+                var buffer = File.ReadAllBytes(path);
+                return new HttpResponse(HttpStatusCode.OK, buffer, GetContentType(path));
             }
             else
             {
                 return HttpResponse.GetNotFoundResponse();
             }
+        }
+
+        public static string GetFileText(string path)
+        {
+            return File.ReadAllText(path);
         }
 
         /// <summary>
@@ -424,7 +458,7 @@ namespace MyServer.Controllers
                 { ".zip", "application/x-zip-compressed" }
         };
 
-        private static string GetPath(string? rawUrl, Configs configs)
+        public static string GetPath(string? rawUrl, Configs configs)
         {
             if (rawUrl == null || rawUrl.Length < 2)
                 return configs.LocalRoot + configs.DefaultFile;
@@ -432,7 +466,7 @@ namespace MyServer.Controllers
             return configs.LocalRoot + rawUrl;
         }
 
-        private static string GetContentType(string path)
+        public static string GetContentType(string path)
         {
             return _mappings[Path.GetExtension(path)];
         }

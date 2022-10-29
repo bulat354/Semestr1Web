@@ -47,7 +47,7 @@ namespace MyServer
         }
 
         public HttpResponse(HttpStatusCode statusCode, string content, string contentType = "text/plane") 
-            : this(statusCode, Encoding.ASCII.GetBytes(content), contentType) { }
+            : this(statusCode, Encoding.UTF8.GetBytes(content), contentType) { }
 
         public HttpResponse(HttpStatusCode statusCode, object content, string contentType = "Application/json")
             : this(statusCode, JsonSerializer.Serialize(content), contentType) { }

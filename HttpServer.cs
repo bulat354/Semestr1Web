@@ -12,12 +12,16 @@ namespace MyServer
 {
     public class HttpServer : IDisposable
     {
+        public static string configFileName { get; private set; } = "serverconfig.json";
+        public static Configs configs { get; private set; }
+        static HttpServer()
+        {
+            configs = Configs.Load(configFileName);
+        }
+
         private HttpListener _listener;
         private Thread _listenerThread;
-        private Configs configs;
         private CancellationTokenSource _src = new CancellationTokenSource();
-
-        public static string configFileName = "serverconfig.json";
 
         public bool IsWorking;
 

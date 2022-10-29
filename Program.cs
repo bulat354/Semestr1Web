@@ -1,4 +1,8 @@
-﻿namespace MyServer
+﻿using MyServer.TemplateEngines;
+using System.Data.SqlClient;
+using MyServer.DataBaseConnection;
+
+namespace MyServer
 {
     internal class Program
     {

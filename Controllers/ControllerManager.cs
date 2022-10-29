@@ -46,6 +46,9 @@ namespace MyServer.Controllers
                 if (result == null)
                     return HttpResponse.GetNotFoundResponse();
 
+                if (result is HttpResponse resp)
+                    return resp;
+
                 return new HttpResponse(HttpStatusCode.OK, JsonSerializer.Serialize(result), "Application/json");
             }
             else
