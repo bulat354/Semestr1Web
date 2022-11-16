@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "BfOCLTgN0lbYwubrXXgYhycAx9UWbFRiF7gPl8Lfm56N99I734um3+gDvebWNmoVaPMZ7DwdDeqkXYQ34qgw2g==",
+  "success": true,
+  "projectFilePath": "C:\\git\\Semestrovka\\HtmlEngineLibrary\\HtmlEngineLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\1\\.nuget\\packages\\nreco.lambdaparser\\1.0.12\\nreco.lambdaparser.1.0.12.nupkg.sha512",
+    "C:\\Users\\1\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
