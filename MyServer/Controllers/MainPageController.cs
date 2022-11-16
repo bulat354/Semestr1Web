@@ -1,4 +1,5 @@
 ﻿using HtmlEngineLibrary;
+using MyORM;
 using MyServer.Attributes;
 using MyServer.DataTypes;
 using MyServer.Results;
@@ -13,6 +14,8 @@ namespace MyServer.Controllers
     [DefaultController]
     public class MainPageController : ControllerBase
     {
+        private static MiniORM orm = new MiniORM("GavnoGamesDB");
+
         [DefaultHttpMethod]
         public IResult GetPage()
         {
@@ -20,36 +23,20 @@ namespace MyServer.Controllers
             var template = File.ReadAllText("templates/index.html");
             var model = new MainPageContent(IsAuthorized, CurrentSession);
 
-            model.Games = new Article[]
-            {
-                new Article()
-                {
-                    CreatorId = 1,
-                    Description = "",
-                    FirstDate = DateTime.Now,
-                    Id = 1,
-                    ImageColorHex = "#000000",
-                    ImageUrl = "../img/programmers.jpg",
-                    LastDate = DateTime.Now,
-                    Title = "first",
-                    Type = "game"
-                }
-            };
-            model.Articles = new Article[]
-            {
-                new Article()
-                {
-                    CreatorId = 1,
-                    Description = "",
-                    FirstDate = DateTime.Now,
-                    Id = 2,
-                    ImageColorHex = "#000000",
-                    ImageUrl = "../img/programmers.jpg",
-                    LastDate = DateTime.Now,
-                    Title = "second",
-                    Type = "game"
-                }
-            };
+            model.Games = orm
+                .Select<Article>()
+                .Where("Type = @type", ("@type", "game"))
+                .Take(2)
+                .OrderBy("LastDate")
+                .Go<Article>()
+                .ToArray();
+            model.Articles = orm
+                .Select<Article>()
+                .Where("Type = @type", ("@type", "article"))
+                .Take(2)
+                .OrderBy("LastDate")
+                .Go<Article>()
+                .ToArray();
 
             service.GenerateAndSaveInDirectory("generated", "index.html", template, model);
             return new FileResult("generated/index.html");
