@@ -1,23 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Data.SqlClient;
-using System.Text.Json;
+﻿using System.Net;
 using System.Text;
-using MyServer.Attributes;
-using MyServer.Controllers;
+using MyServer.Results;
+using MyServer.Managers;
 
 namespace MyServer
 {
     public class HttpServer : IDisposable
     {
         public static string configFileName { get; private set; } = "serverconfig.json";
-        public static Configs configs { get; private set; }
-        static HttpServer()
-        {
-            configs = Configs.Load(configFileName);
-        }
+        public Configs configs { get; private set; }
 
         private HttpListener _listener;
         private Thread _listenerThread;
@@ -52,7 +43,6 @@ namespace MyServer
             _listenerThread.Start();
 
             ControllerManager.Init();
-            FileManager.Init();
         }
 
         private async void Listen()
@@ -83,23 +73,39 @@ namespace MyServer
                 
                 var request = context.Request;
                 var response = context.Response;
+                IResult result;
 
                 try
                 {
                     Debug.RequestReceivedMsg(request.Url.ToString());
-
-                    var result = FileManager.MethodHandler(request, configs);
-                    if (!result.IsSuccess)
-                        result = ControllerManager.MethodHandler(request, configs);
-
-                    result.ToListenerResponse(response);
-
-                    Debug.ResponseSendedMsg(response.StatusCode);
+                    result = ControllerManager.DefaultMethodHandler(request, response, configs);
+                    if (result is NextResult)
+                    {
+                        result = FileManager.MethodHandler(request, configs);
+                        if (result is NextResult)
+                        {
+                            result = ControllerManager.MethodHandler(request, response, configs);
+                            if (result is NextResult)
+                                result = ErrorResult.NotFound("Page not found");
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
-                    HttpResponse.GetInternalErrorResponse(e).ToListenerResponse(response);
+                    result = ErrorResult.InternalError(e.Message);
                 }
+
+                var buffer = result.GetResult();
+                var statusCode = (int)result.GetStatusCode();
+                var contentType = result.GetContentType();
+
+                response.ContentEncoding = Encoding.UTF8;
+                response.StatusCode = statusCode;
+                response.ContentType = contentType;
+                response.OutputStream.Write(buffer, 0, buffer.Length);
+                response.OutputStream.Close();
+
+                Debug.ResponseSendedMsg(statusCode);
 
                 response.Close();
             }

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 namespace MyServer.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class FileControllerAttribute : Attribute
+    public class DefaultControllerAttribute : ApiControllerAttribute
     {
-        public readonly string FileName;
 
-        public FileControllerAttribute(string fileName)
-        {
-            FileName = fileName;
-        }
+    }
+
+    [AttributeUsage(AttributeTargets.Method)]
+    public class DefaultHttpMethodAttribute : HttpGetAttribute
+    {
+
     }
 }
