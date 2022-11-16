@@ -19,8 +19,6 @@ namespace MyServer.Controllers
         [DefaultHttpMethod]
         public IResult GetPage()
         {
-            var service = new HtmlEngineService();
-            var template = File.ReadAllText("templates/index.html");
             var model = new MainPageContent(IsAuthorized, CurrentSession);
 
             model.Games = orm
@@ -38,8 +36,7 @@ namespace MyServer.Controllers
                 .Go<Article>()
                 .ToArray();
 
-            service.GenerateAndSaveInDirectory("generated", "index.html", template, model);
-            return new FileResult("generated/index.html");
+            return GenerateFile("index.html", model);
         }
     }
 }
