@@ -102,8 +102,11 @@ namespace MyServer
                 response.ContentEncoding = Encoding.UTF8;
                 response.StatusCode = statusCode;
                 response.ContentType = contentType;
-                response.OutputStream.Write(buffer, 0, buffer.Length);
-                response.OutputStream.Close();
+                if (buffer != null)
+                {
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.OutputStream.Close();
+                }
 
                 Debug.ResponseSendedMsg(statusCode);
 

@@ -58,21 +58,21 @@ namespace MyServer.Managers
             throw new ArgumentException("Session with the same guid doesn't exist");
         }
 
-        public CacheItemPolicy GetAbsolutePolicy(int minutes)
+        public static CacheItemPolicy GetAbsolutePolicy(int minutes)
         {
             var policy = new CacheItemPolicy();
             policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(minutes);
             return policy;
         }
 
-        public CacheItemPolicy GetSlidingPolicy(int minutes)
+        public static CacheItemPolicy GetSlidingPolicy(int minutes)
         {
             var policy = new CacheItemPolicy();
             policy.SlidingExpiration = TimeSpan.FromMinutes(minutes);
             return policy;
         }
 
-        public CacheItemPolicy GetSessionPolicy()
+        public static CacheItemPolicy GetSessionPolicy()
         {
             var policy = new CacheItemPolicy();
             return policy;
