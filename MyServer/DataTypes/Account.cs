@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MyORM.Attributes;
 using MyORM;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace MyServer.DataTypes
 {
@@ -28,6 +29,20 @@ namespace MyServer.DataTypes
         public string Level { get; set; }
         public string Nickname { get; set; }
         public string Tel { get; set; }
+
+        public bool IsCorrect()
+        {
+            return Regex.IsMatch(Surname, @"^([А-Яа-яA-Za-z]+\-)?[А-Яа-яA-Za-z]+$") &&
+                Regex.IsMatch(Name, @"^[А-Яа-яA-Za-z]+$") &&
+                BirthDate.CompareTo(DateTime.Now) < 0 &&
+                Regex.IsMatch(Gender, @"^[a-z]+$") &&
+                Regex.IsMatch(Level, @"^[a-z]+$") &&
+                !Regex.IsMatch(Nickname, @"--") &&
+                Regex.IsMatch(Tel, @"^\+?[0-9]{1,3}\(?[0-9]{3}\)?[0-9]{3}\-?[0-9]{2}\-?[0-9]{2}$") &&
+                Regex.IsMatch(Email, @"^[a-z0-9\-\+\._%]+%40[a-z0-9\.\-]+\.[a-z]{2,4}$") && Email.Length < 200 &&
+                Regex.IsMatch(Password, @"[a-z]") && Regex.IsMatch(Password, @"[A-Z]") && 
+                Regex.IsMatch(Password, @"[0-9]");
+        }
 
         #region With ORM only
         public static List<Account> GetAll()

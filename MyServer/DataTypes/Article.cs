@@ -16,13 +16,11 @@ namespace MyServer.DataTypes
         [Key, Identity]
         public int Id { get; set; }
         public string Type { get; set; }
-        [Immutable]
         public int CreatorId { get; set; }
         public string ImageUrl { get; set; }
         public string ImageColorHex { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        [Immutable]
         public DateTime FirstDate { get; set; }
         public DateTime LastDate { get; set; }
 
