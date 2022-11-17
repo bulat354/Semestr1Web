@@ -9,7 +9,7 @@ namespace MyORM.Builder
 {
     public class SqlInsertBuilder : SqlNonQueryBuilder
     {
-        private List<string> values = null;
+        private List<string> values = new List<string>();
         private string source = null;
 
         public SqlInsertBuilder(SqlCommand command, MiniORM orm) : base(command, orm)
