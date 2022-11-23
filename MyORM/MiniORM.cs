@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Collections.Specialized;
 using MyORM.Builder;
+using System.Collections;
 
 namespace MyORM
 {

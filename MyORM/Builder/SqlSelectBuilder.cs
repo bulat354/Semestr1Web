@@ -27,14 +27,14 @@ namespace MyORM.Builder
             var text = new StringBuilder();
             text.Append("SELECT");
             if (isDistinct) text.Append(" DISTINCT");
-            if (takeCount > 0) text.Append(" TOP @takeCount");
+            if (takeCount > 0) text.Append($" TOP {takeCount}");
             if (selectors != null) text.Append($" {selectors}");
             else text.Append($" *");
             if (source != null) text.Append($"\nFROM {source}");
             if (searchCondition != null) text.Append($"\nWHERE {searchCondition}");
             if (orderSelectors != null) text.Append($"\nORDER BY {orderSelectors}");
             if (isOrderDesc) text.Append(" DESC");
-            if (skipCount > 0) text.Append("\nOFFSET @skipCount ROWS");
+            if (skipCount > 0) text.Append($"\nOFFSET {skipCount} ROWS");
 
             _command.CommandText = text.ToString();
 
@@ -71,7 +71,6 @@ namespace MyORM.Builder
                 return this;
 
             takeCount = count;
-            _command.Parameters.AddWithValue("@takeCount", count);
             return this;
         }
 
@@ -81,7 +80,6 @@ namespace MyORM.Builder
                 return this;
 
             skipCount = count;
-            _command.Parameters.AddWithValue("@skipCount", count);
             return this;
         }
 
