@@ -154,6 +154,9 @@ namespace MyORM
         public SqlSelectBuilder Select<T>(params string[] selectors) => 
             new SqlSelectBuilder(_connection.CreateCommand(), this).Select<T>(selectors);
 
+        public SqlSelectScalarBuilder Scalar() =>
+            new SqlSelectScalarBuilder(_connection.CreateCommand(), this);
+
         public SqlInsertBuilder Insert<T>(params T[] objs) => 
             new SqlInsertBuilder(_connection.CreateCommand(), this).Insert<T>(objs);
 
