@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace MyServer.DataTypes
 {
-    [Table("Articles")]
-    public class Article
+    [Table("Games")]
+    public class GameInfo
     {
         [Key, Identity]
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Content { get; set; }
-        public DateTime FirstDate { get; set; }
+        public string Description { get; set; }
+        public double Price { get; set; }
         public int ImageId { get; set; }
+        public DateTime Date { get; set; }
 
         [Hide]
         public Image Image { get; set; }

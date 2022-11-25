@@ -12,6 +12,7 @@ namespace MyServer
     public class Configs
     {
         public static readonly Configs DefaultConfigs = new Configs(8080, "./source", "/index.html");
+
         [JsonPropertyName("port")]
         public int Port { get; set; }
         [JsonPropertyName("localRoot")]

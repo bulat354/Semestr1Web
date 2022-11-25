@@ -1,42 +1,57 @@
-﻿using HtmlEngineLibrary;
-using MyORM;
-using MyServer.Attributes;
-using MyServer.DataTypes;
-using MyServer.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyServer.Attributes;
+using MyServer.DataTypes;
+using MyServer.Managers;
+using MyServer.Results;
 
 namespace MyServer.Controllers
 {
     [DefaultController]
-    public class MainPageController : ControllerBase
+    internal class MainPageController : ControllerBase
     {
-        private static MiniORM orm = new MiniORM("GavnoGamesDB");
-
         [DefaultHttpMethod]
         public IResult GetPage()
         {
-            var model = new MainPageContent(IsAuthorized, CurrentSession);
+            var model = CreateContent();
+            model.Games = new[]
+            {
+                new GameInfo()
+                {
+                    Image = new Image(1, "war-of-god.jpg", "#000000"),
+                    Description = "Description",
+                    Title = "War of Gods",
+                    Id = 1
+                }
+            };
+            model.Articles = new[]
+            {
+                new Article()
+                {
+                    Image = new Image(1, "top10.jpg", "#000000"),
+                    Title = "Top10",
+                    Id = 1
+                }
+            };
+            model.Content = GeneratePageContent(model, "index.html");
+            return GeneratePage(model);
+        }
 
-            model.Games = orm
-                .Select<Article>()
-                .Where("Type = @type", ("@type", "game"))
-                .Take(2)
-                .OrderBy("LastDate")
-                .Go<Article>()
-                .ToArray();
-            model.Articles = orm
-                .Select<Article>()
-                .Where("Type = @type", ("@type", "article"))
-                .Take(2)
-                .OrderBy("LastDate")
-                .Go<Article>()
-                .ToArray();
+        private MainPageContent CreateContent()
+        {
+            return new MainPageContent(IsAuthorized, CurrentSession, UrlBase, "index");
+        }
 
-            return GenerateFile("index.html", model);
+        class MainPageContent : PageContent
+        {
+            public GameInfo[] Games;
+            public Article[] Articles;
+
+            public MainPageContent(bool isAuthorized, Session currentSession, string urlBase, params string[] cssNames) 
+                : base(isAuthorized, currentSession, urlBase, cssNames) { }
         }
     }
 }

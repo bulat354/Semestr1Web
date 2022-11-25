@@ -1,4 +1,6 @@
 ﻿using HtmlEngineLibrary;
+using HtmlEngineLibrary.TemplateRendering;
+using MyServer.DataTypes;
 using MyServer.Managers;
 using MyServer.Results;
 using System.Net;
@@ -38,14 +40,23 @@ namespace MyServer.Controllers
                 return cookie != null && SessionManager.Instance.CheckSession(cookie.Value);
             }
         }
-
-        protected IResult GenerateFile(string templatePath, object model)
+        protected string UrlBase
         {
-            var service = new HtmlEngineService();
-            var template = File.ReadAllText("templates/" + templatePath);
+            get
+            {
+                return "http://" + _request.UserHostName;
+            }
+        }
 
-            service.GenerateAndSaveInDirectory("generated", templatePath, template, model);
-            return new FileResult("generated/" + templatePath);
+        protected FileResult GeneratePage(PageContent model)
+        {
+            new HtmlEngineService().GenerateAndSaveInDirectory("generated", "page.html", File.ReadAllText("templates/base.html"), model);
+            return new FileResult("generated/page.html");
+        }
+
+        protected string GeneratePageContent(object model, string fileName)
+        {
+            return new HtmlEngineService().GetHtml(File.ReadAllText("templates/" + fileName), model);
         }
     }
 }
