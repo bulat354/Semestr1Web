@@ -1,0 +1,37 @@
+.stylized1 {
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/war-of-god.jpg) top/100% repeat-y;
+
+    width: 100%;
+
+    overflow: hidden;
+}
+.stylized1 .blur {
+    height: inherit;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 50px;
+    margin-top: 300px;
+    
+    color: rgb(233, 233, 233);
+}
+.stylized1 h1 {
+    margin-bottom: 0;
+
+    font-size: var(--text-size-big);
+}
+.stylized1 h2 {
+    margin-top: 30px;
+    margin-bottom: 0;
+
+    font-size: var(--text-size-smallest);
+}
+.stylized1 h3 {
+    margin-top: 100px;
+
+    font-size: var(--text-size-very-small);
+}

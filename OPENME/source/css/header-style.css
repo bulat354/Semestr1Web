@@ -1,0 +1,39 @@
+.account-block {
+    display: flex;
+    align-items: center;
+}
+.account-block * {
+    margin: 0 5px;
+}
+.profile-link {
+    height: 70px;
+    width: 70px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.profile-link>.big-logo {
+    margin: 0;
+}
+
+.header {
+    height: 100px;
+    width: 100%;
+
+    padding: 0 30px;
+    position: fixed;
+
+    background-color: var(--background-color-light);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    z-index: 1;
+}
+
+.big-logo {
+    margin: 16px;
+    height: 64px;
+    width: auto;
+}

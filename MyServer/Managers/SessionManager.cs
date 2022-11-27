@@ -22,13 +22,13 @@ namespace MyServer.Managers
             _sessions = MemoryCache.Default;
         }
 
-        public Session CreateSession(int accountId, string email, CacheItemPolicy policy = null)
+        public Session CreateSession(int accountId, CacheItemPolicy policy = null)
         {
             if (policy == null)
                 policy = DefaultPolicy;
 
             var guid = Guid.NewGuid().ToString();
-            var session = new Session(guid, accountId, email);
+            var session = new Session(guid, accountId);
 
             while (_sessions.Contains(guid))
             {
@@ -83,15 +83,11 @@ namespace MyServer.Managers
     {
         public string Id { get; }
         public int AccountId { get; }
-        public string Email { get; }
-        public DateTime Created { get; }
 
-        public Session(string id, int accountId, string email)
+        public Session(string id, int accountId)
         {
             Id = id;
             AccountId = accountId;
-            Email = email;
-            Created = DateTime.Now;
         }
     }
 }

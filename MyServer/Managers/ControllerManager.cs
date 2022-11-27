@@ -1,14 +1,7 @@
 ﻿using MyServer.Attributes;
 using MyServer.Controllers;
-using MyServer.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace MyServer.Managers
 {
@@ -17,17 +10,11 @@ namespace MyServer.Managers
         private static Dictionary<string, ControllerMethodInfo> methods;
         private static ControllerMethodInfo defaultMethod;
 
-        public static IResult MethodHandler(HttpListenerRequest request, HttpListenerResponse response, Configs configs)
+        public static bool MethodHandler(HttpListenerRequest request, HttpListenerResponse response)
         {
-            if (request.Url == null)
-            {
-                Debug.ShowWarning("Request without url. Skipped.");
-                return ErrorResult.NotFound();
-            }
-
             var segments = request.Url.Segments;
             if (segments.Length < 2 || segments.Length > 3)
-                return new NextResult();
+                return false;
 
             string controllerName = segments[1].Replace("/", "").ToLower();
             string httpMethodName = request.HttpMethod.ToLower();
@@ -39,50 +26,32 @@ namespace MyServer.Managers
 
             if (methods.TryGetValue(fullName, out var method))
             {
-                var result = method.Invoke(request, response);
-
-                if (method.IsVoid || result == null)
-                    return new EmptyResult();
-
-                if (result is IResult resp)
-                    return resp;
-
-                return new ObjectResult<object>(result);
+                method.Invoke(request, response);
             }
             else
             {
-                return new NextResult();
+                return false;
             }
+
+            return true;
         }
 
-        public static IResult DefaultMethodHandler(HttpListenerRequest request, HttpListenerResponse response, Configs configs)
+        public static bool DefaultMethodHandler(HttpListenerRequest request, HttpListenerResponse response)
         {
-            if (request.Url == null)
-            {
-                Debug.ShowWarning("Request without url. Skipped.");
-                return ErrorResult.NotFound();
-            }
-
             var segments = request.Url.Segments;
             if (segments.Length > 1)
-                return new NextResult();
+                return false;
 
             if (defaultMethod != null)
             {
-                var result = defaultMethod.Invoke(request, response);
-
-                if (defaultMethod.IsVoid || result == null)
-                    return new EmptyResult();
-
-                if (result is IResult resp)
-                    return resp;
-
-                return new ObjectResult<object>(result);
+                defaultMethod.Invoke(request, response);
             }
             else
             {
-                return new NextResult();
+                return false;
             }
+
+            return true;
         }
 
         public static void Init()

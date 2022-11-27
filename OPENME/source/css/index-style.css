@@ -1,0 +1,142 @@
+/*--------------Who Are We Area----------------*/
+.stylized1 {
+    background: linear-gradient(to right, rgb(80, 35, 56) 50%, transparent), url(../img/who-are-we.jpg) right no-repeat;
+    color:rgb(190, 160, 174);
+
+    display: flex;
+    flex-direction: column;
+
+    padding-right: 50%;
+}
+.stylized2 {
+    margin-bottom: 0;
+}
+/*--------------Games Area----------------*/
+.stylized3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 50px;
+}
+.cards-hcollection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    width: 100%;
+}
+.vcard {
+    width: 260px;
+    height: 480px;
+
+    color: var(--text-color-light);
+
+    background: linear-gradient(to top, black 30%, transparent),
+        url(../img/war-of-god.jpg) top/100% no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 0 20px;
+}
+.vcard .normal-title {
+    margin-bottom: 0;
+}
+.vcard-specialized {
+    width: 300px;
+    height: 480px;
+
+    color: var(--text-color-light);
+
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/other-games.jpg) top/100% no-repeat;
+
+    overflow: hidden;
+}
+.vcard-specialized .blur {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/*--------------Articles Area----------------*/
+.stylized4 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-bottom: 50px;
+}
+.cards-vcollection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    width: 100%;
+}
+.hcard {
+    height: 400px;
+    width: 40%;
+    padding-right: 30%;
+    margin: 20px 30px;
+
+    color: var(--text-color-light);
+
+    background: linear-gradient(to right, var(--button-background-color) 50%, transparent),
+        url(../img/top10.jpg) right/50% no-repeat;
+}
+.hcard-specialized {
+    height: 400px;
+    width: 40%;
+    padding-right: 30%;
+    margin: 20px 30px;
+
+    color: var(--text-color-light);
+
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/newspaper.jpg) center/100% no-repeat;
+
+    overflow: hidden;
+}
+.hcard-specialized .blur {
+    display: flex;
+    align-items: center;
+}
+.stylized-text1 {
+    text-align: right;
+}
+/*--------------Join Us Area----------------*/
+.stylized5 {
+    min-height: 350px;
+
+    overflow: hidden;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/party.jpg) center/100% no-repeat;
+}
+.stylized5 .blur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-bottom: 50px;
+}
+.stylized5 .big-title {
+    color: rgb(209, 180, 189);
+    text-align: center;
+}
+.stylized5 .button {
+    text-align: center;
+    white-space: nowrap;
+
+    padding: 25px 35px;
+
+    background: linear-gradient(to right, #511d2a, #1d1a32);
+    color: rgb(209, 180, 189);
+}
+.stylized5 .button:hover {
+    background: linear-gradient(to right, #5f2030, #1d1a32);
+    color:rgb(255, 255, 255);
+}

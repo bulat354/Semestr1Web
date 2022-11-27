@@ -1,0 +1,50 @@
+.stylized1 {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+.stylized1 input {
+    margin: 20px 30px;
+}
+.stylized1 .input {
+    flex: 1;
+}
+
+.stylized2 {
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/top10.jpg) center/100% repeat-y;
+
+    overflow: hidden;
+
+    min-height: 350px;
+    
+    color: rgb(233, 233, 233);
+}
+.stylized2 .blur {    
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 100px);
+
+    padding: 50px;
+}
+.stylized2 h1 {
+    margin-bottom: 20px;
+}
+.stylized2 h2 {
+    display: -webkit-box;
+    white-space: normal;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.stylized3 {
+    min-height: 0;
+
+    padding: 20px;
+}
+.stylized3 .button {
+    margin: 10px;
+}

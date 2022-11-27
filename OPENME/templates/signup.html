@@ -1,0 +1,22 @@
+<div class="content-slim stylized3">
+    <form class="big-content-box static-card stylized1" name="signup" onsubmit="return onSubmitSignup();">
+        <h1 class="very-big-title">Регистрация</h1>
+        <h3 class="normal-text warning-text" id="warning"></h3>
+        <input class="input hovered-card stylized2" type="text" placeholder="Имя" name="name" oninput="validateName();">
+        <select class="input hovered-card stylized2" name="gender">
+            <option value="nobin" selected>Я - небинарная личность</option>
+            <option value="helicopter">Боевой вертолет Apache</option>
+            <option value="male">Мужчина</option>
+            <option value="female">Женщина</option>
+        </select>
+        <input class="input hovered-card stylized2" type="text" placeholder="Email" name="email" oninput="validateEmail();">
+        <input class="input hovered-card stylized2" type="password" placeholder="Придумайте пароль" name="password" oninput="validatePassword();">
+        <div class="stylized2">
+            <input type="checkbox" id="show" onchange="showPassword();">
+            <label for="show">Показать пароль</label>
+        </div>
+        <input class="input hovered-card stylized2" type="password" placeholder="Потвердите пароль" name="acceptpassword" oninput="validatePassword();">
+        <input class="button hovered-card" type="submit" value="Зарегистрироваться">
+    </form>
+    <script src="/js/login.js"></script>
+</div>

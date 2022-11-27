@@ -6,52 +6,27 @@ using System.Threading.Tasks;
 using MyServer.Attributes;
 using MyServer.DataTypes;
 using MyServer.Managers;
-using MyServer.Results;
 
 namespace MyServer.Controllers
 {
     [DefaultController]
-    internal class MainPageController : ControllerBase
+    internal class MainPageController : PageControllerBase
     {
         [DefaultHttpMethod]
-        public IResult GetPage()
+        public void GetPage()
         {
-            var model = CreateContent();
-            model.Games = new[]
+            var content = new MainPageContent()
             {
-                new GameInfo()
-                {
-                    Image = new Image(1, "war-of-god.jpg", "#000000"),
-                    Description = "Description",
-                    Title = "War of Gods",
-                    Id = 1
-                }
+                Games = GameInfos.GetAll(2).Select(GameInfos.LoadImage).ToArray(),
+                Articles = Articles.GetAll(2).Select(Articles.LoadImage).ToArray()
             };
-            model.Articles = new[]
-            {
-                new Article()
-                {
-                    Image = new Image(1, "top10.jpg", "#000000"),
-                    Title = "Top10",
-                    Id = 1
-                }
-            };
-            model.Content = GeneratePageContent(model, "index.html");
-            return GeneratePage(model);
-        }
-
-        private MainPageContent CreateContent()
-        {
-            return new MainPageContent(IsAuthorized, CurrentSession, UrlBase, "index");
+            GenerateAndSend("index.html", Init(content, "Добро пожаловать", "index"));
         }
 
         class MainPageContent : PageContent
         {
             public GameInfo[] Games;
             public Article[] Articles;
-
-            public MainPageContent(bool isAuthorized, Session currentSession, string urlBase, params string[] cssNames) 
-                : base(isAuthorized, currentSession, urlBase, cssNames) { }
         }
     }
 }

@@ -1,0 +1,7 @@
+@foreach (article in Articles)
+<a class="big-content-box hovered-card text-link stylized2" href="/html/article?id=@print (article.Id)" style="background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)), url(/img/@print (article.Image.Name)) center/100% repeat-y;">
+    <div class="blur">
+        <h1>@print (article.Title)</h1>
+        <h2>@print (article.Content)</h2>
+    </div>
+</a>@end

@@ -1,0 +1,18 @@
+<div class="content-slim stylized3">
+    <form class="big-content-box static-card stylized1" name="Login" onsubmit="return onSubmitLogin();">
+        <h1 class="very-big-title">Войти</h1>
+        <h2 class="normal-text warning-text" id="warning"></h2>
+        <input class="input hovered-card stylized2" type="text" placeholder="Email" name="email">
+        <input class="input hovered-card stylized2" type="password" placeholder="Пароль" name="password">
+        <div class="stylized2">
+            <input type="checkbox" id="show" onchange="showPassword();">
+            <label for="show">Показать пароль</label>
+        </div>
+        <div class="stylized2">
+            <input type="checkbox" name="remember" id="remember" placeholder="Запомнить меня">
+            <label for="remember">Запомнить меня</label>
+        </div>
+        <input class="button hovered-card" type="submit" value="Войти">
+    </form>
+    <script src="/js/login.js"></script>
+</div>

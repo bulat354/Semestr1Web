@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="antiquewhite">
+        <title>@print (Title)</title>
+        <link rel="icon" href="/img/logo.png">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <link rel="stylesheet" href="/css/header-style.css" type="text/css">
+        <link rel="stylesheet" href="/css/footer-style.css" type="text/css">
+        @foreach (css in CssNames)
+        <link rel="stylesheet" href="/css/@print (css)-style.css" type="text/css">
+        @end
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="background">
+            <div class="header static-card">
+                <a class="image-link" href="/">
+                    <img class="big-logo" src="/img/logo.png" alt="Gavno Games">
+                </a>
+                <div class="account-block">
+                    @if (!IsAuthorized)<a class="button hovered-card text-link" href="/html/signin">Войти</a>
+                    <a class="button hovered-card text-link" href="/html/signup">Регистрация</a>
+                    @else<a class="hovered-card profile-link" href="/html/profile">
+                        <img class="big-logo" src="/img/logo.png" alt="User">
+                    </a>
+                    @end
+                </div>
+            </div>
+            @print (Content)
+        </div>
+        <div class="footer">
+            <img class="logo mini-logo" src="/img/logo.png" alt="Gavno Games">
+            <div class="bottom-header-text">Все изображения созданы при помощи <a class="text-link" href="https://dream.ai/create" target="_blank">нейросети</a>.</div>
+        </div>
+    </body>
+</html>

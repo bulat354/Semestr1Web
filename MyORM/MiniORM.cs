@@ -160,6 +160,9 @@ namespace MyORM
         public SqlInsertBuilder Insert<T>(params T[] objs) => 
             new SqlInsertBuilder(_connection.CreateCommand(), this).Insert<T>(objs);
 
+        public SqlInsertOutputBuilder InsertOutput<T>(params T[] objs) =>
+            new SqlInsertOutputBuilder(_connection.CreateCommand(), this).Insert<T>(objs);
+
         public SqlUpdateBuilder Update<T>(T obj) => 
             new SqlUpdateBuilder(_connection.CreateCommand(), this).Update<T>(obj);
 

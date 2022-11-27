@@ -1,0 +1,6 @@
+@foreach (game in Games)<a class="big-content-box hovered-card text-link stylized2 stylized4 added" style="background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)), url(/img/@print (game.Image.Name)) top/100% repeat-y;" href="/html/game?id=@print (game.Id)">
+        <div class="blur">
+            <h1>@print (game.Title)</h1>
+            <h2>@print (game.Description)</h2>
+        </div>
+    </a>@end

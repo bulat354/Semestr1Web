@@ -1,0 +1,15 @@
+<div class="content-wide" id="content">
+    <div class="big-content-box static-card stylized1" style="background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)), url(/img/@print (Article.Image.Name)) top/100% repeat-y;">
+        <div class="blur">
+            <h1>@print (Article.Title)</h1>
+            <h2>@print (Article.Date)</h2>
+            <h3>@print (Article.Content)</h3>
+        </div>
+    </div>
+    @if (IsAuthorized)<form class="big-content-box static-card stylized2" name="comment" onsubmit="return false;">
+        <textarea class="input hovered-card" placeholder="Сообщение" name="text"></textarea>
+        <input class="button hovered-card" type="button" value="Отправить" onclick="newComment(@print (Article.Id))">
+    </form>@end
+</div>
+<script src="/js/comments.js"></script>
+<script>document.addEventListener("DOMContentLoaded", initComments(@print (Article.Id)));</script>

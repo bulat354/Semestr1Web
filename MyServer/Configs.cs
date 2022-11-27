@@ -11,7 +11,8 @@ namespace MyServer
     [Serializable]
     public class Configs
     {
-        public static readonly Configs DefaultConfigs = new Configs(8080, "./source", "/index.html");
+        private static readonly Configs _defaultConfigs = new Configs(8080, "./source", "/index.html");
+        public static Configs Instanse { get; private set; }
 
         [JsonPropertyName("port")]
         public int Port { get; set; }
@@ -33,16 +34,16 @@ namespace MyServer
             if (File.Exists(jsonPath))
             {
                 var json = File.ReadAllText(jsonPath);
-                var config = JsonSerializer.Deserialize<Configs>(json);
+                Instanse = JsonSerializer.Deserialize<Configs>(json);
                 Debug.ConfigsLoadedMsg();
-                return config;
+                return Instanse;
             }
             else
             {
-                var json = JsonSerializer.Serialize(DefaultConfigs);
+                var json = JsonSerializer.Serialize(_defaultConfigs);
                 File.WriteAllText(jsonPath, json);
                 Debug.ConfigFileNotFoundMsg(jsonPath);
-                return DefaultConfigs;
+                return _defaultConfigs;
             }
         }
     }

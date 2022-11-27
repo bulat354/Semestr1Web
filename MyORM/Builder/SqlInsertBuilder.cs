@@ -36,10 +36,11 @@ namespace MyORM.Builder
 
             var properties = EntityModel.GetEditableProperties<T>().ToArray();
             var names = properties.Select(x => EntityModel.GetColumnName(x)).ToArray();
+            source += $"({string.Join(", ", names)})";
 
             for (int i = 0; i < objs.Length; i++)
             {
-                var paramNames = names.Select(x => $"@{x}.{i}").ToArray();
+                var paramNames = names.Select(x => $"@{x}{i}").ToArray();
                 values.Add($"({string.Join(", ", paramNames)})");
                 _command.Parameters.AddRange(properties
                     .Zip(paramNames, (p, n) => new SqlParameter(n, p.GetValue(objs[i])))

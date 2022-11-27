@@ -1,14 +1,9 @@
 ﻿using MyServer.Attributes;
 using MyServer.Controllers;
-using MyServer.Results;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace MyServer.Managers
 {
@@ -61,7 +56,7 @@ namespace MyServer.Managers
                 .Select(m => new ControllerMethodInfo(controller, m));
         }
 
-        public object? Invoke(HttpListenerRequest request, HttpListenerResponse response)
+        public void Invoke(HttpListenerRequest request, HttpListenerResponse response)
         {
             NameValueCollection strParams;
             try
@@ -70,7 +65,8 @@ namespace MyServer.Managers
             }
             catch
             {
-                return ErrorResult.BadRequest("Cannot parse giving input.");
+                response.SetStatusCode(HttpStatusCode.BadRequest); 
+                return;
             }
             object?[] objParams = new object?[parameters.Length];
 
@@ -79,19 +75,25 @@ namespace MyServer.Managers
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     var param = parameters[i];
-                    var str = strParams[param.Name];
-                    objParams[i] = Convert.ChangeType(strParams[param.Name], param.ParameterType);
+                    var str = WebUtility.UrlDecode(strParams[param.Name]);
+                    objParams[i] = Convert.ChangeType(str, param.ParameterType);
                 }
             }
             catch
             {
-                return ErrorResult.NotFound("Cannot find method with the same parameter types");
+                response.SetStatusCode(HttpStatusCode.BadRequest);
+                return;
             }
 
             var controller = Activator.CreateInstance(controllerType) as ControllerBase;
             controller.Init(request, response);
 
-            return method.Invoke(controller, objParams);
+            var result = method.Invoke(controller, objParams);
+
+            if (!IsVoid && result != null)
+            {
+                response.SendJson(result).SetStatusCode(HttpStatusCode.OK);
+            }
         }
     }
 }

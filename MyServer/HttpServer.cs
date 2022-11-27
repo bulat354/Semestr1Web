@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Text;
-using MyServer.Results;
 using MyServer.Managers;
 
 namespace MyServer
@@ -8,7 +7,6 @@ namespace MyServer
     public class HttpServer : IDisposable
     {
         public static string configFileName { get; private set; } = "serverconfig.json";
-        public Configs configs { get; private set; }
 
         private HttpListener _listener;
         private Thread _listenerThread;
@@ -19,7 +17,6 @@ namespace MyServer
         public HttpServer()
         {
             _listener = new HttpListener();
-            configs = Configs.DefaultConfigs;
             Debug.ListenerCreatedMsg();
 
             Start();
@@ -49,10 +46,7 @@ namespace MyServer
         {
             lock (_listener)
             {
-                lock (configs)
-                {
-                    configs = Configs.Load(Path.GetFullPath(configFileName));
-                }
+                var configs = Configs.Load(Path.GetFullPath(configFileName));
                 _listener.Prefixes.Add($"http://localhost:{configs.Port}/");
                 _listener.Start();
             }
@@ -73,42 +67,27 @@ namespace MyServer
                 
                 var request = context.Request;
                 var response = context.Response;
-                IResult result;
 
                 try
                 {
                     Debug.RequestReceivedMsg(request.Url.ToString());
-                    result = ControllerManager.DefaultMethodHandler(request, response, configs);
-                    if (result is NextResult)
+                    
+                    if (!ControllerManager.DefaultMethodHandler(request, response))
                     {
-                        result = FileManager.MethodHandler(request, configs);
-                        if (result is NextResult)
+                        if (!FileManager.MethodHandler(request, response))
                         {
-                            result = ControllerManager.MethodHandler(request, response, configs);
-                            if (result is NextResult)
-                                result = ErrorResult.NotFound("Page not found");
+                            ControllerManager.MethodHandler(request, response);
                         }
                     }
                 }
-                catch (Exception e)
+                catch
                 {
-                    result = ErrorResult.InternalError(e.Message);
+                    response.SetStatusCode(HttpStatusCode.InternalServerError);
                 }
-
-                var buffer = result.GetResult();
-                var statusCode = (int)result.GetStatusCode();
-                var contentType = result.GetContentType();
 
                 response.ContentEncoding = Encoding.UTF8;
-                response.StatusCode = statusCode;
-                response.ContentType = contentType;
-                if (buffer != null)
-                {
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.OutputStream.Close();
-                }
 
-                Debug.ResponseSendedMsg(statusCode);
+                Debug.ResponseSendedMsg(response.StatusCode);
 
                 response.Close();
             }

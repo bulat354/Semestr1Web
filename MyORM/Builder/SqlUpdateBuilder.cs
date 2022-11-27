@@ -22,7 +22,7 @@ namespace MyORM.Builder
             var text = new StringBuilder();
             text.Append("UPDATE");
             if (source != null) text.Append(" " + source);
-            if (set != null) text.Append("\nVALUES " + set);
+            if (set != null) text.Append("\nSET " + set);
             if (searchCondition != null) text.Append("\nWHERE " + searchCondition);
 
             _command.CommandText = text.ToString();

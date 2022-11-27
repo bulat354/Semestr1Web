@@ -1,0 +1,14 @@
+.stylized4 {
+    width: calc(50% - 45px);
+    margin: 20px;
+
+    display: inline-flex;
+    
+    padding-top: 200px;
+    background: linear-gradient(rgba(0, 0, 0, 0.526), rgba(0, 0, 0, 0.526)),
+        url(../img/war-of-god.jpg) top/100% repeat-y;
+}
+
+.content-wide {
+    flex-wrap: wrap;
+}

@@ -1,0 +1,5 @@
+<form class="big-content-box static-card stylized2" id="comment@print (Comment.Id)" onsubmit="return false;">
+    <h1>@print (Comment.Creator.Name) writes:</h1>
+    <textarea class="input static-card" placeholder="Cooбщение" name="text" readonly>@print (Comment.Content)</textarea>
+    @if (IsCreator)<input class="button hovered-card" type="submit" value="Редактировать" onclick="editComment(@print (Comment.Id))">@end
+</form>

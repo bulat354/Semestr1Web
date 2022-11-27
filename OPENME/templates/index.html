@@ -1,0 +1,45 @@
+<div class="content-wide">
+    <div class="big-content-box static-card stylized1">
+        <h1 class="very-big-title stylized2">Кто мы такие?</h1>
+        <h4 class="small-title">Мы - самая прогрессивная компания в стране. Gavno Games занимается разработкой отечественных игр и является третьей в списке игровых компаний мира.</h4>
+    </div>
+    <div class="big-content-box static-card stylized3">
+        <h1 class="big-title">Наши игры - наша гордость</h1>
+        <div class="cards-hcollection">
+            @foreach (game in Games)
+            <a class="hovered-card text-link vcard" href="/html/game?id=@print (game.Id)" style="background: linear-gradient(to top, @print(game.Image.ColorHex) 30%, transparent), url(/img/@print (game.Image.Name)) top/100% no-repeat;">
+                <h3 class="normal-title nowrappable">@print (game.Title)</h3>
+                <h4 class="small-title nowrappable">@print (game.Description)</h4>
+            </a>
+            @end
+            <a class="hovered-card text-link vcard-specialized" href="/html/games">
+                <div class="blur">
+                    <h3 class="normal-title">Все игры</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="big-content-box static-card stylized4">
+        <h1 class="big-title stylized-text1">Честные новости от Gavno Games</h1>
+        <div class="cards-vcollection">
+            @foreach (article in Articles)
+            <a class="hovered-card text-link hcard" href="/html/article?id=@print (article.Id)" style="background: linear-gradient(to right, @print (article.Image.ColorHex) 50%, transparent), url(/img/@print (article.Image.Name)) right/50% no-repeat;">
+                <h3 class="big-title nowrappable">@print (article.Title)</h3>
+            </a>
+            @end
+            <a class="hovered-card text-link hcard-specialized" href="/html/search">
+                <div class="blur">
+                    <h3 class="big-title nowrappable">Все новости</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    @if (!IsAuthorized)
+    <div class="big-content-box static-card stylized5">
+        <div class="blur">
+            <h1 class="big-title">Присоединяйся к нам!</h1>
+            <a class="hovered-card button text-link" href="/html/signup">Регистрация</a>
+        </div>
+    </div>
+    @end
+</div>

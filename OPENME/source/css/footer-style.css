@@ -1,0 +1,6 @@
+.footer {
+    height: 50px;
+    padding: 20px 120px;
+    background-color: var(--background-color-normal);
+    font-size: var(--text-size-smallest);
+}

@@ -1,0 +1,22 @@
+<div class="content-slim stylized3">
+    <form class="big-content-box static-card stylized1" name="signup" onsubmit="return false;">
+        <h1 class="very-big-title" id="title">Профиль</h1>
+        <h3 class="normal-text warning-text" id="warning"></h3>
+        <input class="input hovered-card stylized2" type="text" placeholder="Имя" name="name" value="@print (Account.Name)" oninput="validateName();" disabled>
+        <select class="input hovered-card stylized2" name="gender" disabled>
+            <option value="nobin" @if (Account.Gender == "nobin")selected @end>Я - небинарная личность</option>
+            <option value="helicopter" @if (Account.Gender == "helicopter")selected @end>Боевой вертолет Apache</option>
+            <option value="male" @if (Account.Gender == "male")selected @end>Мужчина</option>
+            <option value="female" @if (Account.Gender == "female")selected @end>Женщина</option>
+        </select>
+        <input class="input hovered-card stylized2" type="text" placeholder="Email" name="email" value="@print (Account.Email)" disabled oninput="validateEmail();">
+        <input class="input hovered-card stylized2" type="password" placeholder="Придумайте пароль" name="password" oninput="validatePassword();" style="display: none;">
+        <div class="stylized2" style="display: none;">
+            <input type="checkbox" id="show" onchange="showPassword();">
+            <label for="show">Показать пароль</label>
+        </div>
+        <input class="input hovered-card stylized2" type="password" placeholder="Потвердите пароль" name="acceptpassword" oninput="validatePassword();" style="display: none;">
+        <input class="button hovered-card" type="submit" value="Изменить" onclick="toEditMode();">
+    </form>
+    <script src="/js/login.js"></script>
+</div>

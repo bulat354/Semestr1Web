@@ -1,0 +1,211 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+html {
+    background-color: var(--background-color-dark);
+}
+body {
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+
+    color:var(--text-color-dark);
+    font-size: var(--text-size-very-small);
+    font-family: "Roboto", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.background {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+a {
+    text-decoration: none;
+    color:var(--text-color-dark);
+}
+
+.static-card {
+    border-radius: 20px;
+    box-shadow: 4px 5px 10px var(--shadow-color-light);
+}
+.hovered-card {
+    border-radius: 20px;
+    box-shadow: 4px 5px 10px var(--shadow-color-light);
+}
+.hovered-card:hover {
+    box-shadow: 4px 5px 10px var(--shadow-color-dark);
+}
+
+.mini-logo {
+    margin: 0;
+    height: 32px;
+    width: auto;
+}
+
+.image-link {
+    display: block;
+}
+
+.button {
+    background: var(--button-background-color);
+    padding: 15px 20px;
+
+    color: var(--text-color-light);
+    font-size: var(--text-size-very-small);
+    font-family: "Roboto", sans-serif;
+
+    outline: none;
+    border: none;
+}
+.button[disabled] {
+    background: var(--button-disabled-color);
+}
+.input {
+    background: var(--background-color-light);
+    padding: 15px 20px;
+
+    color: var(--text-color-dark);
+    font-size: var(--text-size-very-small);
+    font-family: "Roboto", sans-serif;
+
+    outline: none;
+    border: none;
+}
+
+.big-content-box {
+    min-height: 400px;
+    margin: 20px 0;
+
+    display: flex;
+
+    background-color: var(--background-color-light);
+}
+
+.content-wide {
+    margin-top: 100px;
+    max-width: 1200px;
+}
+.content-slim {
+    margin-top: 100px;
+    max-width: 700px;
+}
+
+.very-big-title {
+    font-size: var(--text-size-very-large);
+    margin: 50px 30px;
+}
+.big-title {
+    font-size: var(--text-size-big);
+    margin: 50px 30px;
+}
+.normal-title {
+    font-size: var(--text-size-normal);
+    margin: 50px 30px;
+}
+.small-title {
+    font-size: var(--text-size-small);
+    margin: 50px 30px;
+}
+.normal-text {
+    font-size: var(--text-size-very-small);
+    margin: 50px 30px;
+}
+
+.text-link:hover {
+    color: var(--text-color-ultra-light);
+}
+
+.nowrappable {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    max-width: 100%;
+}
+
+.strong-blur {
+    backdrop-filter: blur(8px);
+
+    width: 100%;
+    height: inherit;
+}
+.blur {
+    backdrop-filter: blur(5px);
+
+    width: 100%;
+    height: inherit;
+}
+.light-blur {
+    backdrop-filter: blur(2px);
+
+    width: 100%;
+    height: inherit;
+}
+
+:root {
+    --text-color-ultra-light: white;
+    --text-color-light: antiquewhite;
+    --text-color-normal: rgb(198, 176, 149);
+    --text-color-dark: rgb(146, 122, 90);
+    --text-color-ultra-dark: rgb(89, 70, 45);
+
+    --warning-color-ultra-light: white;
+    --warning-color-light: rgb(250, 215, 215);
+    --warning-color-normal: rgb(198, 149, 149);
+    --warning-color-dark: rgb(146, 90, 90);
+    --warning-color-ultra-dark: rgb(89, 45, 45);
+
+    --shadow-color-dark: rgba(1, 1, 1, 0.35);
+    --shadow-color-light: rgba(1, 1, 1, 0.2);
+
+    --text-size-very-large: 100px;
+    --text-size-large: 80px;
+    --text-size-very-big: 60px;
+    --text-size-big: 48px;
+    --text-size-normal: 36px;
+    --text-size-small: 26px;
+    --text-size-very-small: 20px;
+    --text-size-smallest: 12px;
+
+    --background-color-light: antiquewhite;
+    --background-color-normal: rgb(224, 211, 193);
+    --background-color-dark: rgb(197, 186, 170);
+
+    --selection-back: rgb(208, 179, 140);
+    --selection-color: rgb(255, 247, 236);
+
+    --button-disabled-color: #72685b;
+    --button-background-color: #75644e;
+
+    --selection-text-color: rgb(255, 243, 226);
+    --selection-back-color: rgb(176, 157, 105);
+}
+::selection {
+    background: var(--selection-back);
+    color: var(--selection-color);
+}
+
+/*-----------Webkits-----------*/
+::-webkit-scrollbar {
+    background-color: var(--text-color-light);
+    width: 9px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-color-dark);
+    width: 8px;
+}
+::-webkit-input-placeholder {
+    color: var(--text-color-normal)
+}
+::-ms-expand {
+    margin-right: 30px;
+}
